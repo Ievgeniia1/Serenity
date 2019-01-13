@@ -1,11 +1,14 @@
 package serenity.bdd.steps.serenity;
 
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import serenity.bdd.EnvironmentPropertyLoader;
 import net.thucydides.core.annotations.Step;
 import serenity.bdd.pages.Order;
 
-import static net.serenitybdd.rest.SerenityRest.given;
+
+import io.restassured.specification.RequestSpecification;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static serenity.bdd.config.Config.*;
@@ -14,7 +17,9 @@ public class EndUserSteps {
 
 
     EnvironmentPropertyLoader environmentPropertyLoader;
-    Order order;
+//    Order order;
+//    public static final PetStoreStoreEndpoint STORE_ENDPOINT = new PetStoreStoreEndpoint();
+
 
 //    @Step
 //    public void enters(String keyword) {
@@ -95,6 +100,15 @@ public class EndUserSteps {
                 .then()
                 .extract().response();
 
+    }
+
+    @Step
+    private RequestSpecification given() {
+        return RestAssured.given()
+                .log().uri()
+                .log().body()
+                .baseUri(PETSTORE_BASE_URL)
+                .contentType(ContentType.JSON);
     }
 
     @Step

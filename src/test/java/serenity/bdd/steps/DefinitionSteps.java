@@ -17,27 +17,34 @@ import serenity.bdd.steps.serenity.EndUserSteps;
 public class DefinitionSteps {
 
     @Steps
-    EndUserSteps endUser;
-    Order order;
-    //Response updateResponse;
+    //EndUserSteps endUser;
+    public static final EndUserSteps STORE_ENDPOINT = new EndUserSteps();
 
-    public static final Order STORE_ENDPOINT = new Order();
+    //Order order;
 
-    @Given("I start with created order")
-    public void givenTheOrderIsCreated() {
-        order = Order.placeOrder();
-        order.setStatus(Status.DELIVERED);
+
+
+    @Given("I create hardcoded order")
+    public void ICreateMyOrder(){
+        Order order = Order.placeOrder();
     }
 
-    @When("I run put request to update order")
-    public void whenIRunPutRequest() {
-        endUser.updateOrder(order);
+    @When("I post order with body")
+    public void IPostOrderWithBody(){
+        Order order = Order.placeOrder();
+        STORE_ENDPOINT.createOrder(order);
+
     }
-//
-//
-    @Then("I  get response $response")
-    public void thenIGetResponse(int response) {
-        Assertions.assertThat(updateResponse.getStatusCode()).isEqualTo(response);
+
+    @Then("I extract order ID")
+    public void IExtractOrderID(){
+        Order order = Order.placeOrder();
+        int createdOrderId = STORE_ENDPOINT.createOrder(order).body().as(Order.class).getId();
+        Order createdFromService = STORE_ENDPOINT.getOrderById(createdOrderId).as(Order.class);
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(createdFromService.getPetId()).as("Pet ID").isEqualTo(order.getPetId());
+        assertions.assertThat(createdFromService.getStatus()).as("Status").isEqualTo(order.getStatus());
+        assertions.assertAll();
     }
 
 }

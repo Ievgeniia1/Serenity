@@ -2,7 +2,7 @@ package serenity.bdd.pages;
 
 import net.thucydides.core.pages.PageObject;
 
-public class Order extends PageObject {
+public class Order {
 
 
     private int id;
@@ -74,4 +74,15 @@ public class Order extends PageObject {
         return order;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", petId=" + petId +
+                ", quantity=" + quantity +
+                ", shipDate='" + shipDate + '\'' +
+                ", status=" + status +
+                ", complete=" + complete +
+                '}';
+    }
 }

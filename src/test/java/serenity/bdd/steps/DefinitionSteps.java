@@ -1,30 +1,43 @@
 package serenity.bdd.steps;
 
+
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
+import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
+import serenity.bdd.pages.Order;
+import serenity.bdd.pages.Status;
 import serenity.bdd.steps.serenity.EndUserSteps;
 
 public class DefinitionSteps {
 
     @Steps
     EndUserSteps endUser;
+    Order order;
+    //Response updateResponse;
 
-    @Given("the user is on the Wikionary home page")
-    public void givenTheUserIsOnTheWikionaryHomePage() {
-        endUser.is_the_home_page();
+    public static final Order STORE_ENDPOINT = new Order();
+
+    @Given("I start with created order")
+    public void givenTheOrderIsCreated() {
+        order = Order.placeOrder();
+        order.setStatus(Status.DELIVERED);
     }
 
-    @When("the user looks up the definition of the word '$word'")
-    public void whenTheUserLooksUpTheDefinitionOf(String word) {
-        endUser.looks_for(word);
+    @When("I run put request to update order")
+    public void whenIRunPutRequest() {
+        endUser.updateOrder(order);
     }
-
-    @Then("they should see the definition '$definition'")
-    public void thenTheyShouldSeeADefinitionContainingTheWords(String definition) {
-        endUser.should_see_definition(definition);
+//
+//
+    @Then("I  get response $response")
+    public void thenIGetResponse(int response) {
+        Assertions.assertThat(updateResponse.getStatusCode()).isEqualTo(response);
     }
 
 }

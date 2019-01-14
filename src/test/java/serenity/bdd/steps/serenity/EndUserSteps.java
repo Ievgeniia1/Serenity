@@ -3,6 +3,7 @@ package serenity.bdd.steps.serenity;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.junit.BeforeClass;
 import serenity.bdd.EnvironmentPropertyLoader;
 import net.thucydides.core.annotations.Step;
 import serenity.bdd.pages.Order;
@@ -17,35 +18,6 @@ public class EndUserSteps {
 
 
     EnvironmentPropertyLoader environmentPropertyLoader;
-//    Order order;
-//    public static final PetStoreStoreEndpoint STORE_ENDPOINT = new PetStoreStoreEndpoint();
-
-
-//    @Step
-//    public void enters(String keyword) {
-//        dictionaryPage.enter_keywords(keyword);
-//    }
-//
-//    @Step
-//    public void starts_search() {
-//        dictionaryPage.lookup_terms();
-//    }
-//
-//    @Step
-//    public void should_see_definition(String definition) {
-//        assertThat(dictionaryPage.getDefinitions(), hasItem(containsString(definition)));
-//    }
-//
-//    @Step
-//    public void is_the_home_page() {
-//        dictionaryPage.open();
-//    }
-//
-//    @Step
-//    public void looks_for(String term) {
-//        enters(term);
-//        starts_search();
-//    }
 
     @Step
     public Response getOrderById(int id) {
@@ -111,12 +83,11 @@ public class EndUserSteps {
                 .contentType(ContentType.JSON);
     }
 
-    @Step
+    @BeforeClass
     public void retrievsEnvironment (String keyword){
             environmentPropertyLoader.getProperty("environment.config");
-            //put logger here
             EnvironmentPropertyLoader.getLog();
-            System.out.println(environmentPropertyLoader.getProperty("environment.config"));
+
     }
  }
 

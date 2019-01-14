@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 public class EnvironmentPropertyLoader {
 
-    //singleton
     private static Logger log = LoggerFactory.getLogger(EnvironmentPropertyLoader.class);
 
     public static Logger getLog() {

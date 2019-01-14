@@ -74,15 +74,4 @@ public class Order {
         return order;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", petId=" + petId +
-                ", quantity=" + quantity +
-                ", shipDate='" + shipDate + '\'' +
-                ", status=" + status +
-                ", complete=" + complete +
-                '}';
-    }
 }

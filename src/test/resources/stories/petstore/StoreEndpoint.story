@@ -5,42 +5,41 @@ As a user
 I want to test CRUD methods on Store Endpoint
 So that I can see the results
 
-Scenario: Verification of put request
-Meta:
+
+Scenario: Verification of post request
+!--Meta:
 !--@skip
 !--@ignored true
 Given I create default order
-When I update order
-Then the status code is 405
-
-
-Scenario: Verification of post request
-Meta:
-!--@skip
-!--@ignored true
-When I create default order
-And I retrieve the order by ID
-Then the status code is 200
-And ID of created order equals ID of default order
+When I get order by id
+Then The status code is 200
 
 
 Scenario: Verification of get request
-Meta:
+!--Meta:
 !--@skip
 !--@ignored true
 Given I create default order
-When I retrieve the order by ID
-Then ID of created order equals ID of default order
-And the status code is 200
+When I get order by id
+Then The status code is 200
 
+
+Scenario: Verification of put request
+!--Meta:
+!--@skip
+!--@ignored true
+Given I create default order
+When I set quantity 10 to created order
+Then The status code is 405
+And Parameters (ID,Status) of created order equals parameters  of default order
 
 
 Scenario: Verification of delete request
-Meta:
+!--Meta:
 !--@skip
 !--@ignored true
 Given I create default order
-And I retrieve the order by ID
-When I delete the order by ID
-And I get the response by ID
-Then the status code is 404
+When I delete order by id
+And I get order by id
+Then The status code is 404
+

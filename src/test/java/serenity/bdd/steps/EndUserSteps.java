@@ -1,31 +1,31 @@
-package serenity.bdd.steps.serenity;
+package serenity.bdd.steps;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.junit.Before;
 import org.junit.BeforeClass;
-import serenity.bdd.EnvironmentPropertyLoader;
 import net.thucydides.core.annotations.Step;
-import serenity.bdd.pages.Order;
+import serenity.bdd.models.Order;
 
 
 import io.restassured.specification.RequestSpecification;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static serenity.bdd.config.Config.*;
 
 public class EndUserSteps {
 
 
-    EnvironmentPropertyLoader environmentPropertyLoader;
+
 
     @Step
     public Response getOrderById(int id) {
-        return given()
-                //.pathParam("orderId",id)
+         return given()
+                .pathParam("orderId",id)
                 .when()
-                .get(ORDER_ID, id)
-                .then().extract().response();
+                .get(ORDER_ID, id);
     }
 
     @Step
@@ -56,9 +56,7 @@ public class EndUserSteps {
         return given()
                 .body(order)
                 .when()
-                .put(ORDER)
-                .then()
-                .extract().response();
+                .put(ORDER).then().extract().response();
 
     }
 
@@ -76,19 +74,16 @@ public class EndUserSteps {
 
     @Step
     private RequestSpecification given() {
+        System.getProperty("environment.config");
         return RestAssured.given()
                 .log().uri()
                 .log().body()
                 .baseUri(PETSTORE_BASE_URL)
                 .contentType(ContentType.JSON);
-    }
-
-    @BeforeClass
-    public void retrievsEnvironment (String keyword){
-            environmentPropertyLoader.getProperty("environment.config");
-            EnvironmentPropertyLoader.getLog();
 
     }
+
+
  }
 
 

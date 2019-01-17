@@ -1,6 +1,4 @@
-package serenity.bdd.pages;
-
-import net.thucydides.core.pages.PageObject;
+package serenity.bdd.models;
 
 public class Order {
 
